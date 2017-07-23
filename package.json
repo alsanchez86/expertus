@@ -1,0 +1,24 @@
+{
+  "name": "expertus",
+  "license": "MIT",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alsanchez86/expertus.git"
+  },
+  "css": "./css/",
+  "js": "./js/",
+  "node_modules": "./node_modules/",
+  "bower_components": "./bower_components/",
+  "dist": "./dist/",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-sass": "*",
+    "gulp-clean-css": "*",
+    "gulp-rename": "*",
+    "gulp-coffee": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "run-sequence": "*"
+  }
+}
