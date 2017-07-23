@@ -55,7 +55,7 @@ gulp.task('js:libs', function() {
             pkg.bower_components + 'bootstrap/dist/js/bootstrap.min.js',
 
             // underscore
-            pkg.node_modules + 'underscore/underscore-min.js'
+            pkg.bower_components + 'underscore/underscore-min.js'
         ])
         .pipe(
             concat("libs.js")
@@ -67,7 +67,11 @@ gulp.task('js:libs', function() {
 
 gulp.task('js:coffee', function() {
     return gulp.src([
-            pkg.js + 'coffee/**/*.coffee'
+            // pkg.js + 'coffee/**/*.coffee'
+            pkg.js + 'coffee/variables.coffee',
+            pkg.js + 'coffee/validations.coffee',
+            pkg.js + 'coffee/functions.coffee',
+            pkg.js + 'coffee/app.coffee'
         ])
         .pipe(
             coffee({bare: true})
