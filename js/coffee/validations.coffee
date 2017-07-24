@@ -3,7 +3,9 @@
 ###
 
 ###
-    Valida las coordenadas introducidas.
+    Valida las coordenadas introducidas para el plateau
+
+    param string
     return object
 ###
 validatePlateauCoordinates = (data) ->    
@@ -12,7 +14,7 @@ validatePlateauCoordinates = (data) ->
         console.log messages.coordinates_error_1
         return {}
     
-    splited = data.split(" ");
+    splited = data.split " "
 
     # validate coordinates length
     if splited.length isnt 2
@@ -20,8 +22,8 @@ validatePlateauCoordinates = (data) ->
         return {}
 
     # to integer
-    x = parseInt(splited[0]);
-    y = parseInt(splited[1]);
+    x = parseInt splited[0]
+    y = parseInt splited[1]
 
     # validate coordinates data
     unless x or y
@@ -31,7 +33,9 @@ validatePlateauCoordinates = (data) ->
     x: x, y: y
 
 ###
-    Valida las coordenadas introducidas.
+    Valida las coordenadas introducidas para robot
+
+    param string
     return object
 ###
 validateRobotCoordinates = (data) ->    
@@ -40,7 +44,7 @@ validateRobotCoordinates = (data) ->
         console.log messages.coordinates_error_1
         return {}
     
-    splited = data.split(" ");
+    splited = data.split " "
 
     # validate coordinates length
     if splited.length isnt 3
@@ -48,17 +52,19 @@ validateRobotCoordinates = (data) ->
         return {}
 
     # to integer
-    x = parseInt(splited[0]);
-    y = parseInt(splited[1]);
-    o = splited[2];
+    x = parseInt splited[0]
+    y = parseInt splited[1]
+
+    # to lowercase
+    o = splited[2].toString().toLowerCase()
 
     # validate coordinates data
     unless x or y
         console.log messages.coordinates_error_1
         return {}    
-
-    # case sensitive!
-    if o != "N" and o != "S" and o != "E" and o != "O"
+    
+    # no case sensitive
+    if o != "n" and o != "s" and o != "e" and o != "o"
         console.log messages.coordinates_error_2
         return {}    
 
@@ -70,18 +76,21 @@ validateRobotCoordinates = (data) ->
         - No puede salir de los límites de la meseta
         - No puede haber más de dos robots en la misma casilla
 
+    param object {x: x, y: y, o: o}
     return object
 ###
 validateRobotPosition = (data) ->      
     # no está vacio
-    unless _.size(data)        
+    unless _.size data
+        return {}    
+
+    # validate data type
+    if typeof data.x is "undefined" or typeof data.y is "undefined" or typeof data.o is "undefined"
+        console.log messages.deploy_error_1
         return {}
 
     # 1.- No puede salir de los límites de la meseta
-    if data.x < plateau.minx || data.y < plateau.miny
-        return {}
-
-    if data.x > plateau.maxx || data.y > plateau.maxy
+    if data.x < plateau.minx || data.y < plateau.miny || data.x > plateau.maxx || data.y > plateau.maxy
         return {}
 
     # 2.- No puede haber más de dos robots en la misma casilla

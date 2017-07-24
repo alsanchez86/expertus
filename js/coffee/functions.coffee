@@ -7,9 +7,9 @@
     return void
 ###
 generatePlateau = (data) ->
-    coordinates = validatePlateauCoordinates(data)    
+    coordinates = validatePlateauCoordinates data
 
-    unless _.size(coordinates)
+    unless _.size coordinates
         console.log messages.plateau_error_1
         return
 
@@ -19,23 +19,37 @@ generatePlateau = (data) ->
 
 ###
     Deploy Robot
-    Si los datos no son correctos, se despliega un robot inactivo (status: false)
+    Si los datos no son correctos, se despliega un robot inactivo (active: false)
 ###
 deployRobot = (data) ->
-    robot       = {x: 0, y: 0, o: "", status: false}
-    coordinates = validateRobotCoordinates(data)   
-    coordinates = validateRobotPosition(coordinates)
+    robot       = x: 0, y: 0, o: "", id: 0, active: false, instructions: []
+    coordinates = validateRobotCoordinates data
+    coordinates = validateRobotPosition coordinates
     
-    if _.size(coordinates)               
+    if _.size coordinates
         robot.x         = coordinates.x
         robot.y         = coordinates.y
         robot.o         = coordinates.o
-        robot.status    = true      
+        robot.active    = true      
     else
         console.log messages.deploy_error_1
 
-    robots.push(robot);
+    robot.id = robots.length + 1
+    robots.push robot
     return
 
-moveRobot = (data) ->
+addInstructionsRobot = (robot, data) ->
+    return
+
+addInstructionsLastAddedRobot = (data) ->
+    # each de robots
+    _.each robots, (robot) -> addInstructionsRobot robot, data
+    return
+
+startRobot = (robot) -> 
+    return
+
+startProgram = () ->
+    # each de robots con condicion dentro (status = true)
+    _.each robots, (robot) -> startRobot robot    
     return

@@ -1,10 +1,14 @@
 ###
     APP
 ###
+generatePlateau "5 5"
 
-generatePlateau("5 5");
-deployRobot("1 2 N");
-# moveActiveRobot("LMLMLMLMM");
+## Robot 1
+deployRobot "1 2 N"
+addInstructionsLastAddedRobot "LMLMLMLMM"
 
-console.log robots
+## Robot 2
+deployRobot "3 4 N"
+addInstructionsLastAddedRobot "LMLMLMLMM"
 
+startProgram()
