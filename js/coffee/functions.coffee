@@ -74,17 +74,18 @@ addInstructionsLastAddedRobot = (data) ->
 getNewRobotPosition = (data) ->
     # devolver la nueva posición en función de la orientación del robot y actual posición del mismo    
     # x: x, y: y: o
-
-    
-
+    # if data.o == "n"
+    # if data.o == "s"
+    # if data.o == "e"
+    # if data.o == "o"  
 
     return {}
 
 startRobot = (robot) ->     
     # recorrer el conjunto de instrucciones 
     # hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
-    _.each robot.instructions, () ->
-        cell = getNewRobotPosition x: robot.instructions.x, y: robot.instructions.y, o: robot.instructions.o
+    _.each robot.instructions, (instruction) ->
+        cell = getNewRobotPosition robot, instruction
         cell = validateRobotPosition(cell)
 
         if _.size cell
