@@ -51,6 +51,8 @@ startRobot = (robot) ->
     return
 
 startProgram = () ->
+    console.log "Robots deployed: " + robots
+
     # each de robots con condicion dentro (status = true)
     _.each robots, (robot) -> startRobot robot    
     return
