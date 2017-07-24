@@ -14,16 +14,16 @@ validatePlateauCoordinates = (data) ->
         console.log messages.coordinates_error_1
         return {}
     
-    splited = data.split " "
+    data = data.split " "
 
     # validate coordinates length
-    if splited.length isnt 2
+    if _.size data isnt 2
         console.log messages.coordinates_error_1
         return {}
 
     # to integer
-    x = parseInt splited[0]
-    y = parseInt splited[1]
+    x = parseInt data[0]
+    y = parseInt data[1]
 
     # validate coordinates data
     unless x or y
@@ -44,19 +44,19 @@ validateRobotCoordinates = (data) ->
         console.log messages.coordinates_error_1
         return {}
     
-    splited = data.split " "
+    data = data.split " "
 
     # validate coordinates length
-    if splited.length isnt 3
+    if _.size data isnt 3
         console.log messages.coordinates_error_1
         return {}
 
     # to integer
-    x = parseInt splited[0]
-    y = parseInt splited[1]
+    x = parseInt data[0]
+    y = parseInt data[1]
 
     # to lowercase
-    o = splited[2].toString().toLowerCase()
+    o = data[2].toLowerCase()
 
     # validate coordinates data
     unless x or y
@@ -71,10 +71,9 @@ validateRobotCoordinates = (data) ->
     x: x, y: y, o: o
 
 ###
-    Valida la posición del robot
-    Tiene en cuenta:
-        - No puede salir de los límites de la meseta
-        - No puede haber más de dos robots en la misma casilla
+    Valida la posición del robot:    
+    - No puede salir de los límites de la meseta
+    - No puede haber más de dos robots en la misma casilla
 
     param object {x: x, y: y, o: o}
     return object
@@ -96,8 +95,41 @@ validateRobotPosition = (data) ->
     # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.x == data.x and robot.y == data.y
 
-    if share.length > maxRobotsCell
+    if _.size share > maxRobotsCell
         console.log messages.position_error_1
         return {}
 
     data
+
+###
+    Valida la instrucciones pasadas al robot:    
+    - Transformar string en array
+    - Que todos los valores sean L, R o M
+
+    param string
+    return object
+###
+validateRobotInstructions = (data) ->    
+    # validate data type
+    if typeof data isnt "string"
+        console.log messages.instructions_error_1
+        return []    
+    
+    # lowercase
+    data = data.toLowerCase()
+
+    # split
+    data = data.split ""
+
+    # validate coordinates length
+    unless _.size data
+        console.log messages.instructions_error_1
+        return []    
+
+    # every value == "l" or == "r" or == "m"
+    every = _.every data, (instruction) -> instruction == "l" or instruction == "r" or instruction == "m"
+
+    if every
+        return data    
+
+    return []

@@ -7,14 +7,14 @@
     return void
 ###
 generatePlateau = (data) ->
-    coordinates = validatePlateauCoordinates data
+    data = validatePlateauCoordinates data
 
-    unless _.size coordinates
+    unless _.size data
         console.log messages.plateau_error_1
         return
 
-    plateau.maxx = coordinates.x
-    plateau.maxy = coordinates.y
+    plateau.maxx = data.x
+    plateau.maxy = data.y
     return
 
 ###
@@ -22,37 +22,85 @@ generatePlateau = (data) ->
     Si los datos no son correctos, se despliega un robot inactivo (active: false)
 ###
 deployRobot = (data) ->
-    robot       = x: 0, y: 0, o: "", id: 0, active: false, instructions: []
-    coordinates = validateRobotCoordinates data
-    coordinates = validateRobotPosition coordinates
+    robot   = x: 0, y: 0, o: "", id: 0, active: false, instructions: []
+    data    = validateRobotCoordinates data
+    data    = validateRobotPosition data
     
-    if _.size coordinates
-        robot.x         = coordinates.x
-        robot.y         = coordinates.y
-        robot.o         = coordinates.o
+    if _.size data
+        robot.x         = data.x
+        robot.y         = data.y
+        robot.o         = data.o
         robot.active    = true      
     else
         console.log messages.deploy_error_1
 
-    robot.id = robots.length + 1
+    robot.id = _.size(robots) + 1
     robots.push robot
     return
 
+###
+    Add instructions to single robot 
+    param robot: object
+    param data: string or array   
+###
 addInstructionsRobot = (robot, data) ->
+    if typeof data is "string"
+        data = validateRobotInstructions data
+
+    if _.size data
+        robot.instructions = data
+
     return
 
-addInstructionsLastAddedRobot = (data) ->
-    # each de robots
-    # last de underscore http://underscorejs.org/#last
-    # _.each robots, (robot) -> addInstructionsRobot robot, data
+###
+    Add instructions to last deployed robot
+    param data: string
+###
+addInstructionsLastAddedRobot = (data) ->     
+    data = validateRobotInstructions data
+
+    # obtener último robot activo añadido
+    last = _.chain robots
+            .filter (robot) -> robot.active
+            .last()
+            .value()
+
+    # añadir instrucciones al robot
+    if last
+        addInstructionsRobot last, data
+
     return
 
-startRobot = (robot) -> 
+getNewRobotPosition = (data) ->
+    # devolver la nueva posición en función de la orientación del robot y actual posición del mismo    
+    # x: x, y: y: o
+
+    
+
+
+    return {}
+
+startRobot = (robot) ->     
+    # recorrer el conjunto de instrucciones 
+    # hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
+    _.each robot.instructions, () ->
+        cell = getNewRobotPosition x: robot.instructions.x, y: robot.instructions.y, o: robot.instructions.o
+        cell = validateRobotPosition(cell)
+
+        if _.size cell
+            robot.instructions = cell
+            console.log messages.robot_move_2 + cell
+        else
+            console.log messages.robot_move_3 + cell  
+
+        return
+
     return
 
-startProgram = () ->
-    console.log "Robots deployed: " + robots
+startProgram = () ->    
+    # start to move active robots sequentially
+    _.chain robots
+        .filter (robot) -> robot.active
+        .each   (robot) -> startRobot robot
 
-    # each de robots con condicion dentro (status = true)
-    _.each robots, (robot) -> startRobot robot    
     return
