@@ -93,11 +93,10 @@ validateRobotPosition = (data) ->
     if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy
         return {}
 
-    # 2.- No puede haber más de dos robots en la misma casilla
-    # robots que comparten dicha posicion
+    # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.x == data.x and robot.y == data.y
 
-    if share.length > 2
+    if share.length > maxRobotsCell
         console.log messages.position_error_1
         return {}
 

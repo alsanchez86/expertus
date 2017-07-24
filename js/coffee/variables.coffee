@@ -9,6 +9,8 @@ messages =
     deploy_error_1:         "Error deploying the robot. Please, check the coordinates."
     position_error_1:       "Error. There are two robots in that position."
 
+maxRobotsCell = 2
+
 plateau = 
     minx: 0
     miny: 0

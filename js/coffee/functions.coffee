@@ -43,7 +43,8 @@ addInstructionsRobot = (robot, data) ->
 
 addInstructionsLastAddedRobot = (data) ->
     # each de robots
-    _.each robots, (robot) -> addInstructionsRobot robot, data
+    # last de underscore http://underscorejs.org/#last
+    # _.each robots, (robot) -> addInstructionsRobot robot, data
     return
 
 startRobot = (robot) -> 
