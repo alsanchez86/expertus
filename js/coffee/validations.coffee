@@ -90,7 +90,7 @@ validateRobotPosition = (data) ->
         return {}
 
     # 1.- No puede salir de los límites de la meseta
-    if data.x < plateau.minx || data.y < plateau.miny || data.x > plateau.maxx || data.y > plateau.maxy
+    if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy
         return {}
 
     # 2.- No puede haber más de dos robots en la misma casilla
