@@ -12,13 +12,14 @@
   "bower_components": "./bower_components/",
   "dist": "./dist/",
   "devDependencies": {
-    "gulp": "*",
-    "gulp-sass": "*",
-    "gulp-clean-css": "*",
-    "gulp-rename": "*",
-    "gulp-coffee": "*",
-    "gulp-concat": "*",
-    "gulp-uglify": "*",
-    "run-sequence": "*"
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.7.0",
+    "gulp-coffee": "^2.3.4",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-rev": "^8.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^3.0.0",
+    "run-sequence": "^2.0.0"
   }
 }
