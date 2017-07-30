@@ -64,7 +64,7 @@ validateRobotCoordinates = (data) ->
         return {}    
     
     # no case sensitive
-    if o != "n" and o != "s" and o != "e" and o != "o"
+    unless o == "n" or o == "s" or o == "e" or o != "o"
         console.log messages.coordinates_error_2
         return {}    
 
@@ -84,7 +84,7 @@ validateRobotPosition = (data) ->
         return {}    
 
     # validate data type
-    if typeof data.x is "undefined" or typeof data.y is "undefined" or typeof data.o is "undefined"
+    if (_.isUndefined data.x) or (_.isUndefined data.y) or (_.isUndefined data.o)
         console.log messages.deploy_error_1
         return {}
 

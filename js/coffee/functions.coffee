@@ -22,15 +22,15 @@ generatePlateau = (data) ->
     Si los datos no son correctos, se despliega un robot inactivo (active: false)
 ###
 deployRobot = (data) ->
-    robot   = x: 0, y: 0, o: "", id: 0, active: false, instructions: []
+    robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
     data    = validateRobotCoordinates data
     data    = validateRobotPosition data
     
     if _.size data
-        robot.x         = data.x
-        robot.y         = data.y
-        robot.o         = data.o
-        robot.active    = true      
+        robot.position.x    = data.x
+        robot.position.y    = data.y
+        robot.position.o    = data.o
+        robot.active        = true      
     else
         console.log messages.deploy_error_1
 
@@ -44,7 +44,7 @@ deployRobot = (data) ->
     param data: string or array   
 ###
 addInstructionsRobot = (robot, data) ->
-    if typeof data is "string"
+    if _.isString data
         data = validateRobotInstructions data
 
     if _.size data
@@ -71,37 +71,61 @@ addInstructionsLastAddedRobot = (data) ->
 
     return
 
-getNewRobotPosition = (data) ->
-    # devolver la nueva posición en función de la orientación del robot y actual posición del mismo    
-    # x: x, y: y: o
-    # if data.o == "n"
-    # if data.o == "s"
-    # if data.o == "e"
-    # if data.o == "o"  
+turnRobot = (instruction, orientation) ->
+    turns[instruction][orientation]
 
-    return {}
+moveRobot = (robot) ->
+    moveX = moves.x[robot.position.o]
+    moveY = moves.y[robot.position.o]
 
-startRobot = (robot) ->     
-    # recorrer el conjunto de instrucciones 
-    # hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
+    x = robot.position.x + moveX
+    y = robot.position.y + moveY
+
+    x: x, y: y
+
+# devolver la nueva posición en función de la orientación del robot y actual posición del mismo    
+getNewRobotPosition = (robot, instruction) ->    
+    x = robot.position.x
+    y = robot.position.y
+    o = robot.position.o
+
+    if instruction == "l" or instruction == "r"
+        o = turnRobot instruction, robot.position.o
+
+    if instruction == "m"
+        position = moveRobot robot
+        return x: position.x, y: position.y, o: o  
+    
+    x: x, y: y, o: o  
+
+# recorrer el conjunto de instrucciones 
+# hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
+startRobot = (robot) ->       
+    console.log messages.robot_move_1 + robot.id
+
     _.each robot.instructions, (instruction) ->
-        cell = getNewRobotPosition robot, instruction
-        cell = validateRobotPosition(cell)
+        position    = getNewRobotPosition robot, instruction        
+        position    = validateRobotPosition position
+        message     = "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]"
 
-        if _.size cell
-            robot.instructions = cell
-            console.log messages.robot_move_2 + cell
+        if _.size position  
+            # set new robot position          
+            robot.position = position
+
+            console.log messages.robot_move_2 + message
         else
-            console.log messages.robot_move_3 + cell  
-
+            console.log messages.robot_move_3 + message
+    
         return
 
     return
 
-startProgram = () ->    
-    # start to move active robots sequentially
+# start to move active robots sequentially
+startProgram = () ->        
     _.chain robots
         .filter (robot) -> robot.active
         .each   (robot) -> startRobot robot
+    
+    # cuando termine el each de robots, mostrar por consola la posición de cada uno
 
     return
