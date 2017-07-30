@@ -9,8 +9,8 @@
     return object
 ###
 validatePlateauCoordinates = (data) ->    
-    # validate data type
-    if typeof data isnt "string"
+    # validate data type    
+    unless _.isString data
         console.log messages.coordinates_error_1
         return {}
     
@@ -40,7 +40,7 @@ validatePlateauCoordinates = (data) ->
 ###
 validateRobotCoordinates = (data) ->    
     # validate data type
-    if typeof data isnt "string"
+    unless _.isString data
         console.log messages.coordinates_error_1
         return {}
     
@@ -111,7 +111,7 @@ validateRobotPosition = (data) ->
 ###
 validateRobotInstructions = (data) ->    
     # validate data type
-    if typeof data isnt "string"
+    unless _.isString data
         console.log messages.instructions_error_1
         return []    
     
