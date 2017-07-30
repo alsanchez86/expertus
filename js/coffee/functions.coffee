@@ -6,13 +6,17 @@
     Almacena los límites de la meseta.
     return void
 ###
-generatePlateau = (data) ->
+createPlateau = (data) ->       
+    console.log messages.creating_plateau
+
     data = validatePlateauCoordinates data
 
     unless _.size data
         console.log messages.plateau_error_1
         return
 
+    plateau.minx = 0
+    plateau.miny = 0
     plateau.maxx = data.x
     plateau.maxy = data.y
     return
@@ -22,6 +26,10 @@ generatePlateau = (data) ->
     Si los datos no son correctos, se despliega un robot inactivo (active: false)
 ###
 deployRobot = (data) ->
+    id      = _.size(robots) + 1
+
+    console.log messages.deploying_robot + id
+
     robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
     data    = validateRobotCoordinates data
     data    = validateRobotPosition data
@@ -32,9 +40,9 @@ deployRobot = (data) ->
         robot.position.o    = data.o
         robot.active        = true      
     else
-        console.log messages.deploy_error_1
+        console.log messages.robot_error_1 + id
 
-    robot.id = _.size(robots) + 1
+    robot.id = id
     robots.push robot
     return
 
@@ -43,9 +51,8 @@ deployRobot = (data) ->
     param robot: object
     param data: string or array   
 ###
-addInstructionsRobot = (robot, data) ->
-    if _.isString data
-        data = validateRobotInstructions data
+addInstructionsRobot = (robot, data) ->    
+    data = validateRobotInstructions data
 
     if _.size data
         robot.instructions = data
@@ -56,9 +63,7 @@ addInstructionsRobot = (robot, data) ->
     Add instructions to last deployed robot
     param data: string
 ###
-addInstructionsLastAddedRobot = (data) ->     
-    data = validateRobotInstructions data
-
+addInstructionsLastAddedRobot = (data) ->         
     # obtener último robot activo añadido
     last = _.chain robots
             .filter (robot) -> robot.active
@@ -108,24 +113,44 @@ startRobot = (robot) ->
         position    = validateRobotPosition position
         message     = "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]"
 
-        if _.size position  
-            # set new robot position          
-            robot.position = position
-
+        if _.size position              
             console.log messages.robot_move_2 + message
+
+            # set new robot position          
+            robot.position = position            
         else
-            console.log messages.robot_move_3 + message
+            console.log messages.robot_error_5 + message
     
         return
 
     return
 
 # start to move active robots sequentially
-startProgram = () ->        
+start = () ->        
     _.chain robots
         .filter (robot) -> robot.active
         .each   (robot) -> startRobot robot
     
     # cuando termine el each de robots, mostrar por consola la posición de cada uno
 
+    
     return
+
+# APP
+bootstrap = () -> 
+    createPlateau "5 5"
+
+    unless _.size plateau
+        console.log messages.end
+        return
+
+    ## Robot 1
+    deployRobot "1 2 X"
+    addInstructionsLastAddedRobot "LMLMLMLMM"
+
+    ## Robot 2
+    deployRobot "3 3 E"
+    addInstructionsLastAddedRobot "MMRMMRMRRM"
+
+    # start
+    start()

@@ -8,8 +8,8 @@
     param string
     return object
 ###
-validatePlateauCoordinates = (data) ->    
-    # validate data type    
+validatePlateauCoordinates = (data) ->       
+    # validate data type
     unless _.isString data
         console.log messages.coordinates_error_1
         return {}
@@ -18,22 +18,27 @@ validatePlateauCoordinates = (data) ->
 
     # validate coordinates length
     if _.size data isnt 2
-        console.log messages.coordinates_error_1
+        console.log messages.coordinates_error_2
         return {}
 
     # to integer
     x = parseInt data[0]
     y = parseInt data[1]
 
-    # validate coordinates data
-    unless x or y
-        console.log messages.coordinates_error_1
+    # validate coordinates type data
+    if _.isNaN(x) or _.isNaN(y)
+        console.log messages.coordinates_error_2
         return {}    
+
+    # positive number
+    if x < 0 or y < 0
+        console.log messages.coordinates_error_2
+        return {}
 
     x: x, y: y
 
 ###
-    Valida las coordenadas introducidas para robot
+    Valida las coordenadas introducidas para un robot
 
     param string
     return object
@@ -48,7 +53,7 @@ validateRobotCoordinates = (data) ->
 
     # validate coordinates length
     if _.size data isnt 3
-        console.log messages.coordinates_error_1
+        console.log messages.coordinates_error_2
         return {}
 
     # to integer
@@ -58,14 +63,19 @@ validateRobotCoordinates = (data) ->
     # to lowercase
     o = data[2].toLowerCase()
 
-    # validate coordinates data
-    unless x or y
-        console.log messages.coordinates_error_1
-        return {}    
-    
-    # no case sensitive
-    unless o == "n" or o == "s" or o == "e" or o != "o"
+    # validate coordinates type data
+    if _.isNaN(x) or _.isNaN(y)
         console.log messages.coordinates_error_2
+        return {}    
+
+    # positive number
+    if x < 0 or y < 0
+        console.log messages.coordinates_error_2
+        return {}        
+    
+    # orientation validation
+    if _.indexOf(orientations, o) == -1    
+        console.log messages.robot_error_2
         return {}    
 
     x: x, y: y, o: o
@@ -84,19 +94,19 @@ validateRobotPosition = (data) ->
         return {}    
 
     # validate data type
-    if (_.isUndefined data.x) or (_.isUndefined data.y) or (_.isUndefined data.o)
-        console.log messages.deploy_error_1
+    if (_.isUndefined data.x) or (_.isUndefined data.y) or (_.isUndefined data.o)                
         return {}
 
     # 1.- No puede salir de los límites de la meseta
     if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy
+        console.log messages.robot_error_6
         return {}
 
     # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.x == data.x and robot.y == data.y
 
     if _.size share > maxRobotsCell
-        console.log messages.position_error_1
+        console.log messages.robot_error_3
         return {}
 
     data
@@ -112,7 +122,7 @@ validateRobotPosition = (data) ->
 validateRobotInstructions = (data) ->    
     # validate data type
     unless _.isString data
-        console.log messages.instructions_error_1
+        console.log messages.robot_error_4
         return []    
     
     # lowercase
@@ -123,13 +133,14 @@ validateRobotInstructions = (data) ->
 
     # validate coordinates length
     unless _.size data
-        console.log messages.instructions_error_1
+        console.log messages.robot_error_4
         return []    
 
     # every value == "l" or == "r" or == "m"
     every = _.every data, (instruction) -> instruction == "l" or instruction == "r" or instruction == "m"
 
-    if every
-        return data    
-
-    return []
+    unless every
+        console.log messages.robot_error_4
+        return []
+    
+    data        

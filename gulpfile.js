@@ -104,6 +104,9 @@ gulp.task('js:min', function() {
         ])
         .pipe(
             uglify()
+                .on('error', function(e){
+                    console.log(e);
+                })
         )
         .pipe(
             rename({
