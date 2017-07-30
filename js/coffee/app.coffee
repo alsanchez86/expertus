@@ -2,4 +2,10 @@
     APP
 ###    
 
-bootstrap()
+$ ->
+  $('#add-robot').click (event) ->
+    event.preventDefault()
+    cloneEmptyRobot()
+
+
+# bootstrap()

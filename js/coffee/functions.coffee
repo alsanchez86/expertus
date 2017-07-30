@@ -154,3 +154,9 @@ bootstrap = () ->
     console.log robots
 
     return
+
+###
+# UX functions
+###
+cloneEmptyRobot = () ->
+    
