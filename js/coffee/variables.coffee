@@ -1,7 +1,7 @@
 ###
     VARIABLES
 ###
-maxRobotsCell   = 2
+maxRobotsCell   = 1
 plateau         = {}
 orientations    = ["n", "o", "s", "e"]
 turns           = l: {n: "o", o: "s", s: "e", e: "n"}, r: {n: "e", o: "n", s: "o", e: "s"}
@@ -21,7 +21,7 @@ messages        =
     deploying_robot:        "Deploying robot with id: "
     robot_error_1:          "Error deploying the robot with id: " 
     robot_error_2:          "Robot orientation error"
-    robot_error_3:          "Error. There are two robots in the same position"
+    robot_error_3:          "Error. " + maxRobotsCell + " robot/s in the same position"
     robot_error_4:          "Error. Robot's instructions are not valid"
     robot_error_5:          "Error moving robot to: "
     robot_error_6:          "Error moving robot. Out of plateau limits"

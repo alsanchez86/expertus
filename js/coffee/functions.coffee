@@ -130,27 +130,27 @@ start = () ->
     _.chain robots
         .filter (robot) -> robot.active
         .each   (robot) -> startRobot robot
-    
-    # cuando termine el each de robots, mostrar por consola la posición de cada uno
-
-    
     return
 
 # APP
 bootstrap = () -> 
-    createPlateau "5 5"
+    createPlateau "1 1"
 
     unless _.size plateau
         console.log messages.end
         return
 
     ## Robot 1
-    deployRobot "1 2 X"
-    addInstructionsLastAddedRobot "LMLMLMLMM"
+    deployRobot "0 0 N"
+    addInstructionsLastAddedRobot "M"
 
     ## Robot 2
-    deployRobot "3 3 E"
-    addInstructionsLastAddedRobot "MMRMMRMRRM"
+    deployRobot "0 0 N"
+    addInstructionsLastAddedRobot "M" 
 
     # start
     start()
+
+    console.log robots
+
+    return
