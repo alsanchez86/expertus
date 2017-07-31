@@ -20,8 +20,9 @@ div.plateau {
 
 div.console {
     @include border(1px solid $primary-color-light, 5px);
-    height: 10rem;
+    height: 12rem;
     padding: 0.6rem;
+    overflow: scroll;
 
     p {
         margin-bottom: 0.3rem;

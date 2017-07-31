@@ -10,15 +10,15 @@
 ###
 validatePlateauCoordinates = (data) ->       
     # validate data type
-    unless _.isString data
-        console.log messages.coordinates_error_1
+    unless _.isString data        
+        consoleWrite messages.coordinates_error_1
         return {}
     
     data = data.split " "
 
     # validate coordinates length
-    if _.size(data) isnt 2
-        console.log messages.coordinates_error_2
+    if _.size(data) isnt 2        
+        consoleWrite messages.coordinates_error_2
         return {}
 
     # to integer
@@ -26,13 +26,13 @@ validatePlateauCoordinates = (data) ->
     y = parseInt data[1]
 
     # validate coordinates type data
-    if _.isNaN(x) or _.isNaN(y)
-        console.log messages.coordinates_error_2
+    if _.isNaN(x) or _.isNaN(y)        
+        consoleWrite messages.coordinates_error_2
         return {}    
 
     # positive number
-    if x < 0 or y < 0
-        console.log messages.coordinates_error_2
+    if x < 0 or y < 0        
+        consoleWrite messages.coordinates_error_2
         return {}
 
     x: x, y: y
@@ -45,15 +45,15 @@ validatePlateauCoordinates = (data) ->
 ###
 validateRobotCoordinates = (data) ->    
     # validate data type
-    unless _.isString data
-        console.log messages.coordinates_error_1
+    unless _.isString data        
+        consoleWrite messages.coordinates_error_1
         return {}
     
     data = data.split " "
 
     # validate coordinates length
-    if _.size(data) isnt 3
-        console.log messages.coordinates_error_2
+    if _.size(data) isnt 3        
+        consoleWrite messages.coordinates_error_2
         return {}
 
     # to integer
@@ -64,18 +64,18 @@ validateRobotCoordinates = (data) ->
     o = data[2].toLowerCase()
 
     # validate coordinates type data
-    if _.isNaN(x) or _.isNaN(y)
-        console.log messages.coordinates_error_2
+    if _.isNaN(x) or _.isNaN(y)        
+        consoleWrite messages.coordinates_error_2
         return {}    
 
     # positive number
-    if x < 0 or y < 0
-        console.log messages.coordinates_error_2
+    if x < 0 or y < 0        
+        consoleWrite messages.coordinates_error_2
         return {}        
     
     # orientation validation
-    if _.indexOf(orientations, o) == -1    
-        console.log messages.robot_error_2
+    if _.indexOf(orientations, o) == -1            
+        consoleWrite messages.robot_error_2
         return {}    
 
     x: x, y: y, o: o
@@ -98,15 +98,15 @@ validateRobotPosition = (data) ->
         return {}
 
     # 1.- No puede salir de los límites de la meseta
-    if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy
-        console.log messages.robot_error_6
+    if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy        
+        consoleWrite messages.robot_error_6
         return {}
 
     # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.position.x == data.x and robot.position.y == data.y    
 
-    if _.size(share) >= maxRobotsCell
-        console.log messages.robot_error_3
+    if _.size(share) >= maxRobotsCell        
+        consoleWrite messages.robot_error_3
         return {}
 
     data
@@ -121,8 +121,8 @@ validateRobotPosition = (data) ->
 ###
 validateRobotInstructions = (data) ->    
     # validate data type
-    unless _.isString data
-        console.log messages.robot_error_4
+    unless _.isString data        
+        consoleWrite messages.robot_error_4
         return []    
     
     # lowercase
@@ -132,15 +132,15 @@ validateRobotInstructions = (data) ->
     data = data.split ""
 
     # validate coordinates length
-    unless _.size data
-        console.log messages.robot_error_4
+    unless _.size data        
+        consoleWrite messages.robot_error_4
         return []    
 
     # every value == "l" or == "r" or == "m"
     every = _.every data, (instruction) -> instruction == "l" or instruction == "r" or instruction == "m"
 
-    unless every
-        console.log messages.robot_error_4
+    unless every        
+        consoleWrite messages.robot_error_4
         return []
     
     data        

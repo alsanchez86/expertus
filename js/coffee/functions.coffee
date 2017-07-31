@@ -6,13 +6,13 @@
     Almacena los límites de la meseta.
     return void
 ###
-createPlateau = (data) ->       
-    console.log messages.creating_plateau
+createPlateau = (data) ->           
+    consoleWrite messages.creating_plateau
 
     data = validatePlateauCoordinates data
 
-    unless _.size data
-        console.log messages.plateau_error_1
+    unless _.size data        
+        consoleWrite messages.plateau_error_1
         return
 
     plateau.minx = 0
@@ -27,8 +27,7 @@ createPlateau = (data) ->
 ###
 deployRobot = (data) ->
     id      = _.size(robots) + 1
-
-    console.log messages.deploying_robot + id
+    
     consoleWrite messages.deploying_robot + id
 
     robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
@@ -40,8 +39,8 @@ deployRobot = (data) ->
         robot.position.y    = data.y
         robot.position.o    = data.o
         robot.active        = true      
-    else
-        console.log messages.robot_error_1 + id
+    else        
+        consoleWrite messages.robot_error_1 + id
 
     robot.id = id
     robots.push robot
@@ -106,21 +105,21 @@ getNewRobotPosition = (robot, instruction) ->
 
 # recorrer el conjunto de instrucciones 
 # hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
-startRobot = (robot) ->       
-    console.log messages.robot_move_1 + robot.id
+startRobot = (robot) ->           
+    consoleWrite messages.robot_move_1 + robot.id
 
     _.each robot.instructions, (instruction) ->
         position    = getNewRobotPosition robot, instruction        
         position    = validateRobotPosition position
         message     = "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]"
 
-        if _.size position              
-            console.log messages.robot_move_2 + message
+        if _.size position                          
+            consoleWrite messages.robot_move_2 + message
 
             # set new robot position          
             robot.position = position            
-        else
-            console.log messages.robot_error_5 + message
+        else            
+            consoleWrite messages.robot_error_5 + message
     
         return
 
@@ -158,15 +157,9 @@ generatePlateau = () ->
     unless _.isEmpty plateauSizeVal
         createPlateau plateauSizeVal   
 
-        unless _.size plateau
-            console.log messages.end
+        unless _.size plateau            
+            consoleWrite messages.end
             return
-
-consoleWrite = (text) ->
-    output  = $('#console')    
-    current = output.html() + "<p>" + text + "</p>"
-
-    output.html current
 
 # APP
 ###

@@ -68,6 +68,7 @@ gulp.task('js:libs', function() {
 gulp.task('js:coffee', function() {
     return gulp.src([
             // pkg.js + 'coffee/**/*.coffee'
+            pkg.js + 'coffee/common.coffee',
             pkg.js + 'coffee/variables.coffee',
             pkg.js + 'coffee/validations.coffee',
             pkg.js + 'coffee/functions.coffee',
