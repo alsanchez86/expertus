@@ -26,35 +26,43 @@
                                 </label>
 
                                 <input type="text" class="form-control" id="plateau-size" placeholder="5 5">
-                            </div>                           
-                            
-                            <div class="form-group">
-                                <label for="robot-coordinates">
-                                    Robot coordinates:
-                                </label>
+                            </div>           
 
-                                <input type="text" class="form-control" id="robot-coordinates" placeholder="1 2 N">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="robot-instructions">
-                                    Robot instructions:
-                                </label>
-
-                                <input type="text" class="form-control" id="robot-instructions" placeholder="LMLMLMLMM">
-                            </div>                            
-                            
                             <button id="add-robot" class="btn btn-primary">
-                                Add robot
+                                Create plateau
                                 &nbsp;
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
+                                <i class="fa fa-object-ungroup" aria-hidden="true"></i>
+                            </button>    
 
-                            <button id="run-app" class="btn btn-primary">
-                                Start
-                                &nbsp;
-                                <i class="fa fa-play" aria-hidden="true"></i>
-                            </button>                                                        
+                            <div class="plateau-ready">
+                                <div class="form-group">
+                                    <label for="robot-coordinates">
+                                        Robot coordinates:
+                                    </label>
+
+                                    <input type="text" class="form-control" id="robot-coordinates" placeholder="1 2 N">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="robot-instructions">
+                                        Robot instructions:
+                                    </label>
+
+                                    <input type="text" class="form-control" id="robot-instructions" placeholder="LMLMLMLMM">
+                                </div>                            
+                            
+                                <button id="add-robot" class="btn btn-primary">
+                                    Add robot
+                                    &nbsp;
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+
+                                <button id="run-app" class="btn btn-primary">
+                                    Start
+                                    &nbsp;
+                                    <i class="fa fa-play" aria-hidden="true"></i>
+                                </button>                                                            
+                            </div>                                       
                         </form>
                     </div>
 
@@ -64,7 +72,7 @@
                             <small id="plateau-dimensions"></small>
                         </h5>
 
-                        <div id="plateau" class="plateau"></div>
+                        <!--<div id="plateau" class="plateau"></div>-->
 
                         <h5>Output:</h5>
 

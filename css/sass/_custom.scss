@@ -29,6 +29,10 @@ div.console {
     }
 }
 
+div.plateau-ready {
+    display: none;
+}
+
 // GRID COMPONENT
 @include media-breakpoint-only(xs) {}
 
