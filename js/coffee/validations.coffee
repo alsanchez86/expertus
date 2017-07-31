@@ -11,14 +11,14 @@
 validatePlateauCoordinates = (data) ->       
     # validate data type
     unless _.isString data        
-        consoleWrite messages.coordinates_error_1
+        consoleWrite messages.coordinates_error_1, "error"
         return {}
     
     data = data.split " "
 
     # validate coordinates length
     if _.size(data) isnt 2        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}
 
     # to integer
@@ -27,12 +27,12 @@ validatePlateauCoordinates = (data) ->
 
     # validate coordinates type data
     if _.isNaN(x) or _.isNaN(y)        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}    
 
     # positive number
     if x < 0 or y < 0        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}
 
     x: x, y: y
@@ -46,14 +46,14 @@ validatePlateauCoordinates = (data) ->
 validateRobotCoordinates = (data) ->    
     # validate data type
     unless _.isString data        
-        consoleWrite messages.coordinates_error_1
+        consoleWrite messages.coordinates_error_1, "error"
         return {}
     
     data = data.split " "
 
     # validate coordinates length
     if _.size(data) isnt 3        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}
 
     # to integer
@@ -65,17 +65,17 @@ validateRobotCoordinates = (data) ->
 
     # validate coordinates type data
     if _.isNaN(x) or _.isNaN(y)        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}    
 
     # positive number
     if x < 0 or y < 0        
-        consoleWrite messages.coordinates_error_2
+        consoleWrite messages.coordinates_error_2, "error"
         return {}        
     
     # orientation validation
     if _.indexOf(orientations, o) == -1            
-        consoleWrite messages.robot_error_2
+        consoleWrite messages.robot_error_2, "error"
         return {}    
 
     x: x, y: y, o: o
@@ -99,14 +99,14 @@ validateRobotPosition = (data) ->
 
     # 1.- No puede salir de los límites de la meseta
     if data.x < plateau.minx or data.y < plateau.miny or data.x > plateau.maxx or data.y > plateau.maxy        
-        consoleWrite messages.robot_error_6
+        consoleWrite messages.robot_error_6, "error"
         return {}
 
     # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.position.x == data.x and robot.position.y == data.y    
 
-    if _.size(share) >= maxRobotsCell        
-        consoleWrite messages.robot_error_3
+    if _.size(share) > maxRobotsCell        
+        consoleWrite messages.robot_error_3, "error"
         return {}
 
     data
@@ -122,7 +122,7 @@ validateRobotPosition = (data) ->
 validateRobotInstructions = (data) ->    
     # validate data type
     unless _.isString data        
-        consoleWrite messages.robot_error_4
+        consoleWrite messages.robot_error_4, "error"
         return []    
     
     # lowercase
@@ -133,14 +133,14 @@ validateRobotInstructions = (data) ->
 
     # validate coordinates length
     unless _.size data        
-        consoleWrite messages.robot_error_4
+        consoleWrite messages.robot_error_4, "error"
         return []    
 
     # every value == "l" or == "r" or == "m"
     every = _.every data, (instruction) -> instruction == "l" or instruction == "r" or instruction == "m"
 
     unless every        
-        consoleWrite messages.robot_error_4
+        consoleWrite messages.robot_error_4, "error"
         return []
     
     data        

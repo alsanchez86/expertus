@@ -1,7 +1,7 @@
-consoleWrite = (text) ->
+consoleWrite = (text, type) ->
     console.log text
 
     output  = $('#console')    
-    current = output.html() + "<p>" + text + "</p>"
+    current = output.html() + "<p class=" + type + ">" + text + "</p>"
 
     output.html current

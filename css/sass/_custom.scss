@@ -11,26 +11,47 @@ div.content {
     }
 }
 
-div.plateau {
-    @include border(1px solid $primary-color-light, 5px);
-    height: 10rem;
-    margin-bottom: 1rem;
-    padding: 0.6rem;
-}
-
 div.console {
     @include border(1px solid $primary-color-light, 5px);
     height: 12rem;
+    margin-bottom: 1rem;
     padding: 0.6rem;
     overflow: scroll;
 
     p {
         margin-bottom: 0.3rem;
+
+        &.error {
+            color: red;
+        }
+
+        &.success {
+            color: green;
+        }
     }
 }
 
-div.plateau-ready {
+div.plateau-ready,
+div.start-content,
+div.plateau-output,
+div.robots-output,
+div.output-output {
     display: none;
+}
+
+div.start-content {
+    display: none;
+    margin-bottom: 1rem;
+    
+    text-align: right;
+}
+
+div.output-output {
+    ul {
+        li {
+            font-weight: 700;
+        }
+    }
 }
 
 // GRID COMPONENT

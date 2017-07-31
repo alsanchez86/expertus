@@ -28,13 +28,13 @@
                                 <input type="text" class="form-control" id="plateau-size" placeholder="5 5">
                             </div>           
 
-                            <button id="add-robot" class="btn btn-primary">
+                            <button id="create-plateau" class="btn btn-primary">
                                 Create plateau
                                 &nbsp;
                                 <i class="fa fa-object-ungroup" aria-hidden="true"></i>
                             </button>    
 
-                            <div class="plateau-ready">
+                            <div id="plateau-ready" class="plateau-ready">
                                 <div class="form-group">
                                     <label for="robot-coordinates">
                                         Robot coordinates:
@@ -55,28 +55,44 @@
                                     Add robot
                                     &nbsp;
                                     <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>
-
-                                <button id="run-app" class="btn btn-primary">
-                                    Start
-                                    &nbsp;
-                                    <i class="fa fa-play" aria-hidden="true"></i>
-                                </button>                                                            
+                                </button>                                                        
                             </div>                                       
                         </form>
                     </div>
 
                     <div class="col-sm-12 col-md-8">
-                        <h5>
-                            Plateau:
-                            <small id="plateau-dimensions"></small>
-                        </h5>
-
-                        <!--<div id="plateau" class="plateau"></div>-->
-
-                        <h5>Output:</h5>
+                        <h5>Console:</h5>
 
                         <div id="console" class="console"></div>
+
+                        <div id="start-content" class="start-content">
+                            <button id="run-app" class="btn btn-primary">
+                                Start
+                                &nbsp;
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>             
+                        </div>                                              
+
+                        <div id="plateau-output" class="plateau-output">
+                            <h5>
+                                Plateau dimensions:
+                                <small id="plateau-dimensions"></small>
+                            </h5>
+                        </div>                        
+
+                        <div id="robots-output" class="robots-output">
+                            <h5>
+                                Robots active:
+                            </h5>
+
+                            <ul id="robots-list"></ul>
+                        </div>
+
+                        <div id="output-output" class="output-output">
+                            <h5>Robots output:</h5>                      
+
+                            <ul id="output-list"></ul>
+                        </div>                        
                     </div>                
                 </div>
             </div>

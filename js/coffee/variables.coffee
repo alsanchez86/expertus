@@ -1,7 +1,7 @@
 ###
     VARIABLES
 ###
-maxRobotsCell   = 1
+maxRobotsCell   = 2
 plateau         = {}
 orientations    = ["n", "o", "s", "e"]
 turns           = l: {n: "o", o: "s", s: "e", e: "n"}, r: {n: "e", o: "n", s: "o", e: "s"}
@@ -16,7 +16,7 @@ messages        =
     coordinates_error_1:    "Error in input coordinates. Data type not valid"
     coordinates_error_2:    "Error in input coordinates. Input data not valid"    
 
-    creating_plateau:       "Creating the plateau..."
+    creating_plateau:       "Creating plateau"
     plateau_error_1:        "Error generating the plateau. Please, check the input data"
 
     deploying_robot:        "Deploying robot with id: "

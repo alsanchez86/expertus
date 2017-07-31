@@ -7,12 +7,12 @@
     return void
 ###
 createPlateau = (data) ->           
-    consoleWrite messages.creating_plateau
+    consoleWrite messages.creating_plateau, "success"
 
     data = validatePlateauCoordinates data
 
     unless _.size data        
-        consoleWrite messages.plateau_error_1
+        consoleWrite messages.plateau_error_1, "error"
         return
 
     plateau.minx = 0
@@ -28,7 +28,7 @@ createPlateau = (data) ->
 deployRobot = (data) ->
     id      = _.size(robots) + 1
     
-    consoleWrite messages.deploying_robot + id
+    consoleWrite messages.deploying_robot + id, "success"
 
     robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
     data    = validateRobotCoordinates data
@@ -40,7 +40,7 @@ deployRobot = (data) ->
         robot.position.o    = data.o
         robot.active        = true      
     else        
-        consoleWrite messages.robot_error_1 + id
+        consoleWrite messages.robot_error_1 + id, "error"
 
     robot.id = id
     robots.push robot
@@ -106,7 +106,7 @@ getNewRobotPosition = (robot, instruction) ->
 # recorrer el conjunto de instrucciones 
 # hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
 startRobot = (robot) ->           
-    consoleWrite messages.robot_move_1 + robot.id
+    consoleWrite messages.robot_move_1 + robot.id, ""
 
     _.each robot.instructions, (instruction) ->
         position    = getNewRobotPosition robot, instruction        
@@ -114,12 +114,12 @@ startRobot = (robot) ->
         message     = "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]"
 
         if _.size position                          
-            consoleWrite messages.robot_move_2 + message
+            consoleWrite messages.robot_move_2 + message, ""
 
             # set new robot position          
             robot.position = position            
         else            
-            consoleWrite messages.robot_error_5 + message
+            consoleWrite messages.robot_error_5 + message, "error"
     
         return
 
@@ -131,65 +131,13 @@ start = () ->
         .filter (robot) -> robot.active
         .each   (robot) -> startRobot robot
     return
-
-###
-# UX functions
-###
-addRobot = () ->   
-    coordinates     = $('#robot-coordinates')
-    instructions    = $('#robot-instructions')   
-    coordinatesVal  = coordinates.val()
-    instructionsVal = instructions.val()
-
-    unless _.isEmpty(coordinatesVal) && _.isEmpty(instructionsVal)
-        deployRobot coordinatesVal
-        addInstructionsLastAddedRobot instructionsVal
-
-    # reset form
-    coordinates.val("")
-    instructions.val("")
-    return  
     
-generatePlateau = () ->     
-    # inputs
-    plateauSize     = $('#plateau-size')
-    plateauSizeVal  = plateauSize.val()
+outputList = (list) ->
+    list.empty()
 
-    # small
-    dimensions      = $('#plateau-dimensions')    
-
-    unless _.isEmpty plateauSizeVal
-        createPlateau plateauSizeVal   
-
-        unless _.size plateau            
-            consoleWrite messages.end
-            dimensions.text ""
-        else
-            dimensions.text(plateau.maxx + " x " + plateau.maxy)
-
-    return
-
-# APP
-###
-bootstrap = () -> 
-    createPlateau "1 1"
-
-    unless _.size plateau
-        console.log messages.end
-        return
-
-    ## Robot 1
-    deployRobot "0 0 N"
-    addInstructionsLastAddedRobot "M"
-
-    ## Robot 2
-    deployRobot "0 0 N"
-    addInstructionsLastAddedRobot "M" 
-
-    # start
-    start()
-
-    console.log robots
-
-    return
-###
+    _.chain robots
+        .filter (robot) -> robot.active
+        .each   (robot) -> 
+            text = "Robot id: " + robot.id + " -> Position: [X: " + robot.position.x + ", Y: " + robot.position.y + ", O: " + robot.position.o + "]"
+            li = $("<li/>").text text
+            li.appendTo list
