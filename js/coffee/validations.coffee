@@ -5,8 +5,8 @@
 ###
     Valida las coordenadas introducidas para el plateau
 
-    param string
-    return object
+    @param data: string
+    @return object
 ###
 validatePlateauCoordinates = (data) ->       
     # validate data type
@@ -40,8 +40,8 @@ validatePlateauCoordinates = (data) ->
 ###
     Valida las coordenadas introducidas para un robot
 
-    param string
-    return object
+    @param data: string
+    @return object
 ###
 validateRobotCoordinates = (data) ->    
     # validate data type
@@ -85,8 +85,8 @@ validateRobotCoordinates = (data) ->
     - No puede salir de los límites de la meseta
     - No puede haber más de dos robots en la misma casilla
 
-    param object {x: x, y: y, o: o}
-    return object
+    @param data: object {x: x, y: y, o: o}
+    @return object
 ###
 validateRobotPosition = (data) ->      
     # no está vacio
@@ -113,11 +113,11 @@ validateRobotPosition = (data) ->
 
 ###
     Valida la instrucciones pasadas al robot:    
-    - Transformar string en array
-    - Que todos los valores sean L, R o M
+        - Transformar string en array
+        - Que todos los valores sean L, R o M
 
-    param string
-    return object
+    @param data: string
+    @return object
 ###
 validateRobotInstructions = (data) ->    
     # validate data type

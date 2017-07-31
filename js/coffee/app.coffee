@@ -1,7 +1,11 @@
 ###
     APP
 ###    
+
 $ ->
+    ###
+        Listener create plateau button click
+    ###
     $('#create-plateau')
         .click (event) ->
             event.preventDefault()
@@ -21,15 +25,18 @@ $ ->
                     # disable button
                     $(this).addClass "disabled"
 
-                    # show robots
-                    plateauReady.show()
-
                     # show plateau output
                     dimensions.text((plateau.maxx + 1) + " x " + (plateau.maxy + 1))
                     plateauOutput.show()
 
+                    # show robots
+                    plateauReady.show()                    
+
             return
 
+    ###
+        Listener add robot button click
+    ###
     $('#add-robot')
         .click (event) ->
             event.preventDefault()
@@ -65,6 +72,9 @@ $ ->
 
             return             
 
+    ###
+        Listener start button click
+    ###
     $('#run-app')
         .click (event) ->
             event.preventDefault() 

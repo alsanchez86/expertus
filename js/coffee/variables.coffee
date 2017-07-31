@@ -1,6 +1,7 @@
 ###
-    VARIABLES
+    Variables
 ###
+
 maxRobotsCell   = 2
 plateau         = {}
 orientations    = ["n", "o", "s", "e"]
@@ -25,7 +26,7 @@ messages        =
     robot_error_3:          "Error. " + maxRobotsCell + " robot/s in the same position"
     robot_error_4:          "Error. Robot's instructions are not valid"
     robot_error_5:          "Error moving robot to: "
-    robot_error_6:          "Error moving robot. Out of plateau limits"
+    robot_error_6:          "Error moving robot. Reached the limit of the plateau"
 
     robot_move_1:           "Starting to move robot with id: "
     robot_move_2:           "Moving robot to: "    

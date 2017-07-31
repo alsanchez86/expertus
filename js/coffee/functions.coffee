@@ -3,8 +3,10 @@
 ###
 
 ###
-    Almacena los límites de la meseta.
-    return void
+    Setea los límites de la meseta.
+
+    @param data: string
+    @return void
 ###
 createPlateau = (data) ->           
     consoleWrite messages.creating_plateau, "success"
@@ -24,9 +26,12 @@ createPlateau = (data) ->
 ###
     Deploy Robot
     Si los datos no son correctos, se despliega un robot inactivo (active: false)
+
+    @param data: string
+    @return void
 ###
 deployRobot = (data) ->
-    id      = _.size(robots) + 1
+    id = _.size(robots) + 1
     
     consoleWrite messages.deploying_robot + id, "success"
 
@@ -48,8 +53,10 @@ deployRobot = (data) ->
 
 ###
     Add instructions to single robot 
-    param robot: object
-    param data: string or array   
+
+    @param robot: object
+    @param data: string or array   
+    @return void
 ###
 addInstructionsRobot = (robot, data) ->    
     data = validateRobotInstructions data
@@ -61,7 +68,9 @@ addInstructionsRobot = (robot, data) ->
 
 ###
     Add instructions to last deployed robot
-    param data: string
+
+    @param data: string
+    @return void
 ###
 addInstructionsLastAddedRobot = (data) ->         
     # obtener último robot activo añadido
@@ -76,9 +85,22 @@ addInstructionsLastAddedRobot = (data) ->
 
     return
 
+###
+    Turn robot by orientation
+
+    @param instruction: string
+    @param orientation: string
+    @return void
+###
 turnRobot = (instruction, orientation) ->
     turns[instruction][orientation]
 
+###
+    Move single robot
+
+    @param robot: object
+    @return void
+###
 moveRobot = (robot) ->
     moveX = moves.x[robot.position.o]
     moveY = moves.y[robot.position.o]
@@ -88,7 +110,13 @@ moveRobot = (robot) ->
 
     x: x, y: y
 
-# devolver la nueva posición en función de la orientación del robot y actual posición del mismo    
+### 
+    Devuelve la nueva posición en función de la orientación del robot y actual posición del mismo    
+
+    @param robot: object
+    @param instruction: string
+    @return object
+###
 getNewRobotPosition = (robot, instruction) ->    
     x = robot.position.x
     y = robot.position.y
@@ -103,41 +131,36 @@ getNewRobotPosition = (robot, instruction) ->
     
     x: x, y: y, o: o  
 
-# recorrer el conjunto de instrucciones 
-# hay que ir validando cada posición que va a tomar el robot. validateRobotPosition()    
+### 
+    Recorrer el conjunto de instrucciones validando cada posición que va a ocupar el robot
+
+    @param robot: object    
+    @return void
+###
 startRobot = (robot) ->           
     consoleWrite messages.robot_move_1 + robot.id, ""
 
     _.each robot.instructions, (instruction) ->
         position    = getNewRobotPosition robot, instruction        
-        position    = validateRobotPosition position
-        message     = "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]"
+        position    = validateRobotPosition position        
 
         if _.size position                          
-            consoleWrite messages.robot_move_2 + message, ""
+            consoleWrite messages.robot_move_2 + "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]", ""
 
             # set new robot position          
-            robot.position = position            
-        else            
-            consoleWrite messages.robot_error_5 + message, "error"
-    
+            robot.position = position              
         return
 
     return
 
-# start to move active robots sequentially
+### 
+    Start to move active robots sequentially
+###
 start = () ->        
     _.chain robots
         .filter (robot) -> robot.active
-        .each   (robot) -> startRobot robot
-    return
-    
-outputList = (list) ->
-    list.empty()
-
-    _.chain robots
-        .filter (robot) -> robot.active
         .each   (robot) -> 
-            text = "Robot id: " + robot.id + " -> Position: [X: " + robot.position.x + ", Y: " + robot.position.y + ", O: " + robot.position.o + "]"
-            li = $("<li/>").text text
-            li.appendTo list
+            startRobot robot
+            return
+
+    return   
