@@ -1,3 +1,10 @@
+###
+    Write message in console
+
+    @param text: string
+    @param type: string
+    @return void
+###
 consoleWrite = (text, type) ->
     console.log text
 
@@ -8,6 +15,12 @@ consoleWrite = (text, type) ->
 
     return
 
+###
+    Update list robots output
+
+    @param list: object    
+    @return void
+###
 outputList = (list) ->
     list.empty()
 
