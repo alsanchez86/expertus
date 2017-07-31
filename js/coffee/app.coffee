@@ -1,10 +1,22 @@
 ###
     APP
 ###    
-
 $ ->
-    $('#add-robot').click (event) ->
-        event.preventDefault()
-        cloneEmptyRobot()
+    $('#add-robot')
+        .click (event) ->
+            event.preventDefault()
 
-    #  bootstrap()
+            addRobot()            
+
+    $('#run-app')
+        .click (event) ->
+            event.preventDefault() 
+
+            generatePlateau()
+
+            unless _.isEmpty plateau && _.isEmpty robots
+                start()
+
+    # bootstrap()
+
+

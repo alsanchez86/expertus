@@ -17,7 +17,7 @@ validatePlateauCoordinates = (data) ->
     data = data.split " "
 
     # validate coordinates length
-    if _.size data isnt 2
+    if _.size(data) isnt 2
         console.log messages.coordinates_error_2
         return {}
 
@@ -52,7 +52,7 @@ validateRobotCoordinates = (data) ->
     data = data.split " "
 
     # validate coordinates length
-    if _.size data isnt 3
+    if _.size(data) isnt 3
         console.log messages.coordinates_error_2
         return {}
 

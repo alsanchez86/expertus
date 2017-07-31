@@ -29,6 +29,7 @@ deployRobot = (data) ->
     id      = _.size(robots) + 1
 
     console.log messages.deploying_robot + id
+    consoleWrite messages.deploying_robot + id
 
     robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
     data    = validateRobotCoordinates data
@@ -132,7 +133,43 @@ start = () ->
         .each   (robot) -> startRobot robot
     return
 
+###
+# UX functions
+###
+addRobot = () ->   
+    coordinates     = $('#robot-coordinates')
+    instructions    = $('#robot-instructions')   
+    coordinatesVal  = coordinates.val()
+    instructionsVal = instructions.val()
+
+    unless _.isEmpty(coordinatesVal) && _.isEmpty(instructionsVal)
+        deployRobot coordinatesVal
+        addInstructionsLastAddedRobot instructionsVal
+
+    # reset form
+    coordinates.val("")
+    instructions.val("")
+    return  
+    
+generatePlateau = () -> 
+    plateauSize     = $('#plateau-size')
+    plateauSizeVal  = plateauSize.val()
+
+    unless _.isEmpty plateauSizeVal
+        createPlateau plateauSizeVal   
+
+        unless _.size plateau
+            console.log messages.end
+            return
+
+consoleWrite = (text) ->
+    output  = $('#console')    
+    current = output.html() + "<p>" + text + "</p>"
+
+    output.html current
+
 # APP
+###
 bootstrap = () -> 
     createPlateau "1 1"
 
@@ -154,17 +191,4 @@ bootstrap = () ->
     console.log robots
 
     return
-
 ###
-# UX functions
-###
-cloneEmptyRobot = () ->
-    robots      = $('#robots')
-    # clone
-    robotCard   = robots.children('.robot-card').first().clone()
-    # clean data and change atributes
-
-    # append to accordion
-    robotCard.appendTo(robots)       
-    
-    

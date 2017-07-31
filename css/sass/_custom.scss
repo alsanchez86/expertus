@@ -4,14 +4,28 @@ div.content {
     padding: 3rem 0;
 }
 
-div.robots {
-    margin-bottom: 1rem;
+.form-controls {
+    button.btn-primary {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
 }
 
-div.add-robot {
+div.plateau {
+    @include border(1px solid $primary-color-light, 5px);
+    height: 10rem;
     margin-bottom: 1rem;
+    padding: 0.6rem;
+}
 
-    text-align: right;
+div.console {
+    @include border(1px solid $primary-color-light, 5px);
+    height: 10rem;
+    padding: 0.6rem;
+
+    p {
+        margin-bottom: 0.3rem;
+    }
 }
 
 // GRID COMPONENT
