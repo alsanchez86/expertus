@@ -3,9 +3,8 @@
 ###    
 
 $ ->
-  $('#add-robot').click (event) ->
-    event.preventDefault()
-    cloneEmptyRobot()
+    $('#add-robot').click (event) ->
+        event.preventDefault()
+        cloneEmptyRobot()
 
-
-# bootstrap()
+    #  bootstrap()

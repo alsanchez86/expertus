@@ -159,4 +159,12 @@ bootstrap = () ->
 # UX functions
 ###
 cloneEmptyRobot = () ->
+    robots      = $('#robots')
+    # clone
+    robotCard   = robots.children('.robot-card').first().clone()
+    # clean data and change atributes
+
+    # append to accordion
+    robotCard.appendTo(robots)       
+    
     
