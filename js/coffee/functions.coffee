@@ -150,16 +150,24 @@ addRobot = () ->
     instructions.val("")
     return  
     
-generatePlateau = () -> 
+generatePlateau = () ->     
+    # inputs
     plateauSize     = $('#plateau-size')
     plateauSizeVal  = plateauSize.val()
+
+    # small
+    dimensions      = $('#plateau-dimensions')    
 
     unless _.isEmpty plateauSizeVal
         createPlateau plateauSizeVal   
 
         unless _.size plateau            
             consoleWrite messages.end
-            return
+            dimensions.text ""
+        else
+            dimensions.text(plateau.maxx + " x " + plateau.maxy)
+
+    return
 
 # APP
 ###

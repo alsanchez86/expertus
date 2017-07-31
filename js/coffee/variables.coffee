@@ -10,6 +10,7 @@ robots          = []
 messages        = 
     default:                "Error"    
     end:                    "End"
+    no_data:                "No input data"
 
     coordinates_check:      "Please, check the following coordinates: "
     coordinates_error_1:    "Error in input coordinates. Data type not valid"

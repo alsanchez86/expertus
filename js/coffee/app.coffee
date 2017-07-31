@@ -14,8 +14,10 @@ $ ->
 
             generatePlateau()
 
-            unless _.isEmpty plateau && _.isEmpty robots
+            unless _.isEmpty plateau
                 start()
+            else
+                consoleWrite messages.no_data
 
     # bootstrap()
 
