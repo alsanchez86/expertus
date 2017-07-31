@@ -105,7 +105,7 @@ validateRobotPosition = (data) ->
     # 2.- No puede haber más de dos robots en la misma casilla    
     share = _.filter robots, (robot) -> robot.position.x == data.x and robot.position.y == data.y    
 
-    if _.size(share) > maxRobotsCell        
+    if _.size(share) >= maxRobotsCell        
         consoleWrite messages.robot_error_3, "error"
         return {}
 

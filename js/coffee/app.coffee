@@ -24,6 +24,7 @@ $ ->
                 else                   
                     # disable button
                     $(this).addClass "disabled"
+                    plateauSize.addClass "disabled"
 
                     # show plateau output
                     dimensions.text((plateau.maxx + 1) + " x " + (plateau.maxy + 1))
@@ -53,12 +54,10 @@ $ ->
                 deployRobot coordinatesVal
                 addInstructionsLastAddedRobot instructionsVal
 
-                # actives
-                actives = _.filter robots, (robot) -> robot.active
-
-                if _.size actives
+                # robots
+                if _.size robots
                     # update robots list
-                    outputList list                              
+                    robotList list                              
                 
                     # show robots output
                     robotsOutput.show()

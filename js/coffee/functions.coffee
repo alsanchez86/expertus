@@ -24,8 +24,7 @@ createPlateau = (data) ->
     return
 
 ###
-    Deploy Robot
-    Si los datos no son correctos, se despliega un robot inactivo (active: false)
+    Deploy Robot    
 
     @param data: string
     @return void
@@ -35,20 +34,20 @@ deployRobot = (data) ->
     
     consoleWrite messages.deploying_robot + id, "success"
 
-    robot   = position: {x: 0, y: 0, o: ""}, id: 0, active: false, instructions: []
+    robot   = position: {x: 0, y: 0, o: ""}, id: 0, instructions: []
     data    = validateRobotCoordinates data
     data    = validateRobotPosition data
     
     if _.size data
         robot.position.x    = data.x
         robot.position.y    = data.y
-        robot.position.o    = data.o
-        robot.active        = true      
+        robot.position.o    = data.o        
+        robot.id = id
+
+        robots.push robot
     else        
         consoleWrite messages.robot_error_1 + id, "error"
-
-    robot.id = id
-    robots.push robot
+    
     return
 
 ###
@@ -74,13 +73,10 @@ addInstructionsRobot = (robot, data) ->
 ###
 addInstructionsLastAddedRobot = (data) ->         
     # obtener último robot activo añadido
-    last = _.chain robots
-            .filter (robot) -> robot.active
-            .last()
-            .value()
+    last = _.last robots
 
     # añadir instrucciones al robot
-    if last
+    if _.size last
         addInstructionsRobot last, data
 
     return
@@ -154,13 +150,11 @@ startRobot = (robot) ->
     return
 
 ### 
-    Start to move active robots sequentially
+    Start to move robots sequentially
 ###
-start = () ->        
-    _.chain robots
-        .filter (robot) -> robot.active
-        .each   (robot) -> 
-            startRobot robot
-            return
+start = () ->           
+    _.each robots, (robot) -> 
+        startRobot robot
+        return
 
     return   
