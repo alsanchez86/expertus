@@ -1,17 +1,17 @@
 'use strict';
 
-var gulp        = require('gulp'),
-    sass        = require('gulp-sass'),
-    cleanCSS    = require('gulp-clean-css'),
-    rename      = require('gulp-rename'),    
-    coffee      = require('gulp-coffee'),
-    concat      = require('gulp-concat'),
-    uglify      = require('gulp-uglify'),
+var gulp = require('gulp'),
+    sass = require('gulp-sass'),
+    cleanCSS = require('gulp-clean-css'),
+    rename = require('gulp-rename'),
+    coffee = require('gulp-coffee'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
     runSequence = require('run-sequence'),
-    fs          = require('fs'),
-    pkg         = JSON.parse(fs.readFileSync('./package.json'));
+    fs = require('fs'),
+    pkg = JSON.parse(fs.readFileSync('./package.json'));
 
-gulp.task('css:sass', function() {
+gulp.task('css:sass', function () {
     return gulp.src([
             pkg.css + 'sass/app.scss'
         ])
@@ -24,9 +24,9 @@ gulp.task('css:sass', function() {
         );
 });
 
-gulp.task('css:min', function() {
-    return gulp.src([            
-            pkg.dist + 'css/app.css'            
+gulp.task('css:min', function () {
+    return gulp.src([
+            pkg.dist + 'css/app.css'
         ])
         .pipe(
             cleanCSS({
@@ -43,8 +43,8 @@ gulp.task('css:min', function() {
         );
 });
 
-gulp.task('js:libs', function() {
-    return gulp.src([            
+gulp.task('js:libs', function () {
+    return gulp.src([
             // jquery
             pkg.bower_components + 'jquery/dist/jquery.min.js',
 
@@ -65,7 +65,7 @@ gulp.task('js:libs', function() {
         );
 });
 
-gulp.task('js:coffee', function() {
+gulp.task('js:coffee', function () {
     return gulp.src([
             // pkg.js + 'coffee/**/*.coffee'
             pkg.js + 'coffee/common.coffee',
@@ -75,7 +75,9 @@ gulp.task('js:coffee', function() {
             pkg.js + 'coffee/app.coffee'
         ])
         .pipe(
-            coffee({bare: true})
+            coffee({
+                bare: true
+            })
         )
         .pipe(
             concat("coffee.js")
@@ -85,29 +87,29 @@ gulp.task('js:coffee', function() {
         );
 });
 
-gulp.task('js:concat', function() {           
+gulp.task('js:concat', function () {
     return gulp.src([
             pkg.dist + 'js/libs.js',
-            pkg.dist + 'js/coffee.js'            
-        ])        
+            pkg.dist + 'js/coffee.js'
+        ])
         .pipe(
             concat("app.js")
         )
         .pipe(
             gulp.dest(pkg.dist + 'js/')
-        );       
+        );
 });
 
-gulp.task('js:min', function() {
-    return gulp.src([                        
+gulp.task('js:min', function () {
+    return gulp.src([
             pkg.dist + 'js/**/*.js',
             '!' + pkg.dist + 'js/**/*.min.js'
         ])
         .pipe(
             uglify()
-                .on('error', function(e){
-                    console.log(e);
-                })
+            .on('error', function (e) {
+                console.log(e);
+            })
         )
         .pipe(
             rename({
@@ -120,21 +122,21 @@ gulp.task('js:min', function() {
 });
 
 // ----- TASKS ----- //
-gulp.task('watch', ['default'], function() {
+gulp.task('watch', ['default'], function () {
     gulp.watch([
-        pkg.js +  'coffee/**/*.coffee',
-        pkg.css +  'sass/**/*.scss'
+        pkg.js + 'coffee/**/*.coffee',
+        pkg.css + 'sass/**/*.scss'
     ], ['default']);
 });
 
-gulp.task('dev', [], function(done) {    
-    runSequence('js:all', 'css:sass', function() {
+gulp.task('dev', [], function (done) {
+    runSequence('js:all', 'css:sass', function () {
         done();
     });
 });
 
-gulp.task('prod', [], function(done) {    
-    runSequence('js:libs', 'js:coffee', 'js:concat', 'js:min', 'css:sass', 'css:min', function() {
+gulp.task('prod', [], function (done) {
+    runSequence('js:libs', 'js:coffee', 'js:concat', 'js:min', 'css:sass', 'css:min', function () {
         done();
     });
 });

@@ -1,102 +1,102 @@
 ###
     APP
-###    
+###
 
 $ ->
-    ###
-        Listener create plateau button click
-    ###
-    $('#create-plateau')
-        .click (event) ->
-            event.preventDefault()
-            
-            plateauSize     = $('#plateau-size')
-            plateauSizeVal  = plateauSize.val()
-            dimensions      = $('#plateau-dimensions')   
-            plateauReady    = $('#plateau-ready')   
-            plateauOutput   = $('#plateau-output')
+	###
+	    Listener create plateau button click
+	###
+	$('#create-plateau')
+		.click (event) ->
+			event.preventDefault()
 
-            unless _.isEmpty plateauSizeVal
-                createPlateau plateauSizeVal   
+			plateauSize = $('#plateau-size')
+			plateauSizeVal = plateauSize.val()
+			dimensions = $('#plateau-dimensions')
+			plateauReady = $('#plateau-ready')
+			plateauOutput = $('#plateau-output')
 
-                unless _.size plateau            
-                    consoleWrite messages.end, ""            
-                else                   
-                    # disable button
-                    $(this).addClass "disabled"
-                    plateauSize.addClass "disabled"
+			unless _.isEmpty plateauSizeVal
+				createPlateau plateauSizeVal
 
-                    # show plateau output
-                    dimensions.text((plateau.maxx + 1) + " x " + (plateau.maxy + 1))
-                    plateauOutput.show()
+				unless _.size plateau
+					consoleWrite messages.end, ""
+				else
+					# disable button
+					$(this).addClass "disabled"
+					plateauSize.addClass "disabled"
 
-                    # show robots
-                    plateauReady.show()                    
+					# show plateau output
+					dimensions.text((plateau.maxx + 1) + " x " + (plateau.maxy + 1))
+					plateauOutput.show()
 
-            return
+					# show robots
+					plateauReady.show()
 
-    ###
-        Listener add robot button click
-    ###
-    $('#add-robot')
-        .click (event) ->
-            event.preventDefault()
+			return
 
-            coordinates     = $('#robot-coordinates')
-            instructions    = $('#robot-instructions')   
-            coordinatesVal  = coordinates.val()
-            instructionsVal = instructions.val()
-            startContent    = $('#start-content')
-            robotsOutput    = $('#robots-output')
-            list            = $('#robots-list')
+	###
+	    Listener add robot button click
+	###
+	$('#add-robot')
+		.click (event) ->
+			event.preventDefault()
 
-            unless _.isEmpty(coordinatesVal) && _.isEmpty(instructionsVal)
-                deployRobot coordinatesVal
-                addInstructionsLastAddedRobot instructionsVal
+			coordinates = $('#robot-coordinates')
+			instructions = $('#robot-instructions')
+			coordinatesVal = coordinates.val()
+			instructionsVal = instructions.val()
+			startContent = $('#start-content')
+			robotsOutput = $('#robots-output')
+			list = $('#robots-list')
 
-                # robots
-                if _.size robots
-                    # update robots list
-                    robotList list                              
-                
-                    # show robots output
-                    robotsOutput.show()
+			unless _.isEmpty(coordinatesVal) && _.isEmpty(instructionsVal)
+				deployRobot coordinatesVal
+				addInstructionsLastAddedRobot instructionsVal
 
-                    # show start
-                    startContent.show()
+				# robots
+				if _.size robots
+					# update robots list
+					robotList list
 
-            # reset form
-            coordinates.val ""
-            instructions.val ""
+					# show robots output
+					robotsOutput.show()
 
-            return             
+					# show start
+					startContent.show()
 
-    ###
-        Listener start button click
-    ###
-    $('#run-app')
-        .click (event) ->
-            event.preventDefault() 
+			# reset form
+			coordinates.val ""
+			instructions.val ""
 
-            addRobot        = $('#add-robot') 
-            outputOutput    = $('#output-output') 
-            list            = $('#output-list')           
+			return
 
-            unless _.isEmpty plateau                
-                # disable buttons
-                $(this).addClass "disabled"
-                addRobot.addClass "disabled"
+	###
+	    Listener start button click
+	###
+	$('#run-app')
+		.click (event) ->
+			event.preventDefault()
 
-                # start
-                start()
+			addRobot = $('#add-robot')
+			outputOutput = $('#output-output')
+			list = $('#output-list')
 
-                # update output list  
-                outputList list                
+			unless _.isEmpty plateau
+				# disable buttons
+				$(this).addClass "disabled"
+				addRobot.addClass "disabled"
 
-                # show output
-                outputOutput.show()
+				# start
+				start()
 
-            else
-                consoleWrite messages.no_data, "error"
+				# update output list
+				outputList list
 
-            return  
+				# show output
+				outputOutput.show()
+
+			else
+				consoleWrite messages.no_data, "error"
+
+			return

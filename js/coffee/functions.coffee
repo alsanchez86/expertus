@@ -8,62 +8,62 @@
     @param data: string
     @return void
 ###
-createPlateau = (data) ->           
-    consoleWrite messages.creating_plateau, "success"
+createPlateau = (data) ->
+	consoleWrite messages.creating_plateau, "success"
 
-    data = validatePlateauCoordinates data
+	data = validatePlateauCoordinates data
 
-    unless _.size data        
-        consoleWrite messages.plateau_error_1, "error"
-        return
+	unless _.size data
+		consoleWrite messages.plateau_error_1, "error"
+		return
 
-    plateau.minx = 0
-    plateau.miny = 0
-    plateau.maxx = data.x
-    plateau.maxy = data.y
-    return
+	plateau.minx = 0
+	plateau.miny = 0
+	plateau.maxx = data.x
+	plateau.maxy = data.y
+	return
 
 ###
-    Deploy Robot    
+    Deploy Robot
 
     @param data: string
     @return void
 ###
 deployRobot = (data) ->
-    id = _.size(robots) + 1
-    
-    consoleWrite messages.deploying_robot + id, "success"
+	id = _.size(robots) + 1
 
-    robot   = position: {x: 0, y: 0, o: ""}, id: 0, instructions: []
-    data    = validateRobotCoordinates data
-    data    = validateRobotPosition data
-    
-    if _.size data
-        robot.position.x    = data.x
-        robot.position.y    = data.y
-        robot.position.o    = data.o        
-        robot.id = id
+	consoleWrite messages.deploying_robot + id, "success"
 
-        robots.push robot
-    else        
-        consoleWrite messages.robot_error_1 + id, "error"
-    
-    return
+	robot = position: {x: 0, y: 0, o: ""}, id: 0, instructions: []
+	data = validateRobotCoordinates data
+	data = validateRobotPosition data
+
+	if _.size data
+		robot.position.x = data.x
+		robot.position.y = data.y
+		robot.position.o = data.o
+		robot.id = id
+
+		robots.push robot
+	else
+		consoleWrite messages.robot_error_1 + id, "error"
+
+	return
 
 ###
-    Add instructions to single robot 
+    Add instructions to single robot
 
     @param robot: object
-    @param data: string or array   
+    @param data: string or array
     @return void
 ###
-addInstructionsRobot = (robot, data) ->    
-    data = validateRobotInstructions data
+addInstructionsRobot = (robot, data) ->
+	data = validateRobotInstructions data
 
-    if _.size data
-        robot.instructions = data
+	if _.size data
+		robot.instructions = data
 
-    return
+	return
 
 ###
     Add instructions to last deployed robot
@@ -71,15 +71,15 @@ addInstructionsRobot = (robot, data) ->
     @param data: string
     @return void
 ###
-addInstructionsLastAddedRobot = (data) ->         
-    # obtener último robot activo añadido
-    last = _.last robots
+addInstructionsLastAddedRobot = (data) ->
+	# obtener último robot activo añadido
+	last = _.last robots
 
-    # añadir instrucciones al robot
-    if _.size last
-        addInstructionsRobot last, data
+	# añadir instrucciones al robot
+	if _.size last
+		addInstructionsRobot last, data
 
-    return
+	return
 
 ###
     Turn robot by orientation
@@ -89,7 +89,7 @@ addInstructionsLastAddedRobot = (data) ->
     @return void
 ###
 turnRobot = (instruction, orientation) ->
-    turns[instruction][orientation]
+	turns[instruction][orientation]
 
 ###
     Move single robot
@@ -98,63 +98,63 @@ turnRobot = (instruction, orientation) ->
     @return void
 ###
 moveRobot = (robot) ->
-    moveX = moves.x[robot.position.o]
-    moveY = moves.y[robot.position.o]
+	moveX = moves.x[robot.position.o]
+	moveY = moves.y[robot.position.o]
 
-    x = robot.position.x + moveX
-    y = robot.position.y + moveY
+	x = robot.position.x + moveX
+	y = robot.position.y + moveY
 
-    x: x, y: y
+	x: x, y: y
 
-### 
-    Devuelve la nueva posición en función de la orientación del robot y actual posición del mismo    
+###
+    Devuelve la nueva posición en función de la orientación del robot y actual posición del mismo
 
     @param robot: object
     @param instruction: string
     @return object
 ###
-getNewRobotPosition = (robot, instruction) ->    
-    x = robot.position.x
-    y = robot.position.y
-    o = robot.position.o
+getNewRobotPosition = (robot, instruction) ->
+	x = robot.position.x
+	y = robot.position.y
+	o = robot.position.o
 
-    if instruction == "l" or instruction == "r"
-        o = turnRobot instruction, robot.position.o
+	if instruction == "l" or instruction == "r"
+		o = turnRobot instruction, robot.position.o
 
-    if instruction == "m"
-        position = moveRobot robot
-        return x: position.x, y: position.y, o: o  
-    
-    x: x, y: y, o: o  
+	if instruction == "m"
+		position = moveRobot robot
+		return x: position.x, y: position.y, o: o
 
-### 
+	x: x, y: y, o: o
+
+###
     Recorrer el conjunto de instrucciones validando cada posición que va a ocupar el robot
 
-    @param robot: object    
+    @param robot: object
     @return void
 ###
-startRobot = (robot) ->           
-    consoleWrite messages.robot_move_1 + robot.id, ""
+startRobot = (robot) ->
+	consoleWrite messages.robot_move_1 + robot.id, ""
 
-    _.each robot.instructions, (instruction) ->
-        position    = getNewRobotPosition robot, instruction        
-        position    = validateRobotPosition position        
+	_.each robot.instructions, (instruction) ->
+		position = getNewRobotPosition robot, instruction
+		position = validateRobotPosition position
 
-        if _.size position                          
-            consoleWrite messages.robot_move_2 + "[x: " + position.x +  "], [y: "  + position.y + "]" + ", [o: " + position.o + "]", ""
+		if _.size position
+			consoleWrite messages.robot_move_2 + "[x: " + position.x + "], [y: " + position.y + "]" + ", [o: " + position.o + "]", ""
 
-            # set new robot position          
-            robot.position = position              
-        return
+			# set new robot position
+			robot.position = position
+		return
 
-    return
+	return
 
-### 
+###
     Start to move robots sequentially
 ###
-start = () ->           
-    _.each robots, (robot) -> 
-        startRobot robot
-        return
+start = () ->
+	_.each robots, (robot) ->
+		startRobot robot
+		return
 
-    return   
+	return
